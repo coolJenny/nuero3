@@ -11,8 +11,8 @@ gem 'rails', '4.2.4'
 #end
   #
 #group :production do
-  gem 'pg'
-  gem 'thin'
+gem 'pg'
+gem 'thin'
 #end
 # Use SCSS for stylesheets
 # gem 'sass-rails', '~> 5.0'
