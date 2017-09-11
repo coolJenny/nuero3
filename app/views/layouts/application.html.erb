@@ -28,35 +28,36 @@
 						<%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
 						<%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
 						<% end %>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<% if notice %>
-				<p class="alert alert-success"><%= notice %></p>
-				<% end %>
-				<% if alert %>
-				<p class="alert alert-danger"><%= alert %></p>
-				<% end %>
-				<%= yield %>
-			</div>
-
-		</div>
-
-		<div id="footer-container" class="container-fluid">
-			<div class="row">
-				<div class="col-sm-12 footer">
-					<hr>
-					<p>
-						<i class="fa fa-copyright" aria-hidden="true"> </i>Copyright Baylor College of Medicine, the year of inception through the current year, All rights reserved
 					</p>
 				</div>
 			</div>
 		</div>
 
-		<div class="panel panel-body">
+		<div class="row">
+			<% if notice %>
+			<p class="alert alert-success"><%= notice %></p>
+			<% end %>
+			<% if alert %>
+			<p class="alert alert-danger"><%= alert %></p>
+			<% end %>
+			<%= yield %>
+		</div>
 
-		</body>
+	</div>
 
-		</html>
+	<div id="footer-container" class="container-fluid">
+		<div class="row">
+			<div class="col-sm-12 footer">
+				<hr>
+				<p>
+					<i class="fa fa-copyright" aria-hidden="true"> </i>Copyright Baylor College of Medicine, the year of inception through the current year, All rights reserved
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel panel-body">
+
+	</body>
+
+	</html>
