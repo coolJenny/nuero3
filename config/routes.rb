@@ -1,14 +1,12 @@
 Rails.application.routes.draw do
   resources :caps
+  
   devise_for :users
   #resources :selectors
   get 'selector' => 'selector#index', as: :selector
   root 'selector#index'
   resources :descriptions
-
-
-  #get 'caps/index'
-  match '/caps', to: 'caps#index'
+  
 
   #patient is as a function of description
   get   'descriptions/:id/patient'      => 'patients#show'   , as: :patient

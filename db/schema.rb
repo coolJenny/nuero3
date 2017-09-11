@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170403161824) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-  enable_extension "uuid-ossp"
+ActiveRecord::Schema.define(version: 20170911020844) do
 
   create_table "ancillary_testings", force: :cascade do |t|
     t.string   "microbiology"
@@ -37,7 +33,7 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.string   "electron_microscopy_specify"
   end
 
-  add_index "ancillary_testings", ["description_id"], name: "index_ancillary_testings_on_description_id", using: :btree
+  add_index "ancillary_testings", ["description_id"], name: "index_ancillary_testings_on_description_id"
 
   create_table "block_codes", force: :cascade do |t|
     t.integer  "block_number"
@@ -47,7 +43,12 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.datetime "updated_at",        null: false
   end
 
-  add_index "block_codes", ["description_id"], name: "index_block_codes_on_description_id", using: :btree
+  add_index "block_codes", ["description_id"], name: "index_block_codes_on_description_id"
+
+  create_table "caps", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "clinico_pathological_summaries", force: :cascade do |t|
     t.string   "clinpath_summary"
@@ -57,17 +58,7 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.datetime "updated_at",       null: false
   end
 
-  add_index "clinico_pathological_summaries", ["description_id"], name: "index_clinico_pathological_summaries_on_description_id", using: :btree
-
-  create_table "consultants", force: :cascade do |t|
-    t.integer  "description_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.integer  "user_id"
-  end
-
-  add_index "consultants", ["description_id"], name: "index_consultants_on_description_id", using: :btree
-  add_index "consultants", ["user_id"], name: "index_consultants_on_user_id", using: :btree
+  add_index "clinico_pathological_summaries", ["description_id"], name: "index_clinico_pathological_summaries_on_description_id"
 
   create_table "descriptions", force: :cascade do |t|
     t.text     "description"
@@ -77,7 +68,7 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.integer  "user_id"
   end
 
-  add_index "descriptions", ["user_id"], name: "index_descriptions_on_user_id", using: :btree
+  add_index "descriptions", ["user_id"], name: "index_descriptions_on_user_id"
 
   create_table "externals", force: :cascade do |t|
     t.string   "nutrition"
@@ -217,7 +208,6 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.string   "joints_specify"
     t.string   "dermatoglyphics_specify"
     t.string   "anterior_fontanelle_measurement"
-    t.string   "nodes_masses_specify"
     t.float    "birth_weight"
     t.float    "weight_at_autopsy"
     t.float    "crown_heel_length"
@@ -236,7 +226,7 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.text     "patency_of_choanae_specify"
   end
 
-  add_index "externals", ["description_id"], name: "index_externals_on_description_id", using: :btree
+  add_index "externals", ["description_id"], name: "index_externals_on_description_id"
 
   create_table "final_diagnoses", force: :cascade do |t|
     t.text     "report"
@@ -246,7 +236,19 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.datetime "updated_at",     null: false
   end
 
-  add_index "final_diagnoses", ["description_id"], name: "index_final_diagnoses_on_description_id", using: :btree
+  add_index "final_diagnoses", ["description_id"], name: "index_final_diagnoses_on_description_id"
+
+  create_table "final_reports", force: :cascade do |t|
+    t.string   "report"
+    t.string   "assign"
+    t.string   "lock"
+    t.string   "flag"
+    t.integer  "description_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
+  add_index "final_reports", ["description_id"], name: "index_final_reports_on_description_id"
 
   create_table "internals", force: :cascade do |t|
     t.string   "fat"
@@ -806,7 +808,7 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.text     "stomach_and_duodenum_md"
   end
 
-  add_index "internals", ["description_id"], name: "index_internals_on_description_id", using: :btree
+  add_index "internals", ["description_id"], name: "index_internals_on_description_id"
 
   create_table "mother_data", force: :cascade do |t|
     t.integer  "mother_age"
@@ -856,51 +858,7 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.string   "type_of_delivery_specify"
   end
 
-  add_index "mother_data", ["description_id"], name: "index_mother_data_on_description_id", using: :btree
-
-  create_table "neuroblastomas", force: :cascade do |t|
-    t.string   "specimen"
-    t.string   "specimen_specify"
-    t.string   "procedure"
-    t.string   "procedure_specify"
-    t.float    "specimen_size_greatest_dimension"
-    t.float    "specimen_size_additional_dimension_1"
-    t.float    "specimen_size_additional_dimension_2"
-    t.float    "specimen_weight"
-    t.string   "specimen_laterality"
-    t.string   "specimen_laterality_specify"
-    t.float    "tumor_size_gretest_dimenstion"
-    t.float    "tumor_size_additional_dimenstions_1"
-    t.float    "tumor_size_additional_dimenstions_2"
-    t.string   "tumor_size_cant_be_assessed"
-    t.float    "tumor_weight"
-    t.float    "tumor_weight_cant_be_assessed"
-    t.string   "age"
-    t.string   "histological_type"
-    t.integer  "histological_type_nodular_subtype_specify"
-    t.string   "degree_of_differentiation"
-    t.string   "mitotic_karyorrhectic_index"
-    t.string   "tumor_calcification"
-    t.string   "treatment_history"
-    t.string   "international_classification"
-    t.string   "margins"
-    t.string   "margins_specify"
-    t.string   "lymph_vascular_invasion"
-    t.string   "primary_tumor"
-    t.string   "regional_lymph_nodes"
-    t.string   "regional_lymph_nodes_sites"
-    t.integer  "regional_lymph_nodes_examined_number"
-    t.integer  "regional_lymph_nodes_involved_number"
-    t.string   "distant_metastasis"
-    t.string   "distant_metastasis_sites"
-    t.string   "inss_stage"
-    t.string   "mycn_amplification_status"
-    t.string   "other"
-    t.string   "comments"
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
-    t.string   "report_identifier"
-  end
+  add_index "mother_data", ["description_id"], name: "index_mother_data_on_description_id"
 
   create_table "organ_weights", force: :cascade do |t|
     t.integer  "brain_expected"
@@ -930,7 +888,7 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.datetime "updated_at",          null: false
   end
 
-  add_index "organ_weights", ["patient_id"], name: "index_organ_weights_on_patient_id", using: :btree
+  add_index "organ_weights", ["patient_id"], name: "index_organ_weights_on_patient_id"
 
   create_table "patients", force: :cascade do |t|
     t.string   "name"
@@ -948,9 +906,10 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.string   "time_of_autopsy"
     t.string   "restrictions"
     t.string   "prosector"
+    t.string   "type_of_gestation"
+    t.string   "specify_number"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
-    t.integer  "description_id_id"
     t.integer  "description_id"
     t.string   "time_of_birth"
     t.integer  "age_day_week"
@@ -988,11 +947,13 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.string   "normal_no_maternal_vessels_normal_specify"
     t.string   "normal_no_decidua_basalis_normal_specify"
     t.integer  "description_id"
+    t.string   "placentation"
+    t.string   "gross_description"
     t.datetime "created_at",                                                  null: false
     t.datetime "updated_at",                                                  null: false
   end
 
-  add_index "placenta", ["description_id"], name: "index_placenta_on_description_id", using: :btree
+  add_index "placenta", ["description_id"], name: "index_placenta_on_description_id"
 
   create_table "provisional_diagnoses", force: :cascade do |t|
     t.text     "report"
@@ -1002,14 +963,14 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.string   "status"
   end
 
-  add_index "provisional_diagnoses", ["description_id"], name: "index_provisional_diagnoses_on_description_id", using: :btree
+  add_index "provisional_diagnoses", ["description_id"], name: "index_provisional_diagnoses_on_description_id"
 
   create_table "question_answers", force: :cascade do |t|
     t.string   "major_clinical_diagnosis"
     t.string   "major_pathologic_diagnosis"
     t.string   "clinical_cause_of_death"
     t.string   "pathological_cause_of_death"
-    t.string   "discover_a_discrepancy_between_clinical_and_pathologic_diagnosi"
+    t.string   "discover_a_discrepancy_between_clinical_and_pathologic_diagnosis"
     t.string   "establish_an_unexpected_additional_diagnosis"
     t.string   "confirm_the_major_clinical_diagnosis"
     t.string   "information_relevant_to_genetic_counselling"
@@ -1020,7 +981,7 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.string   "are_the_descriptions_clear"
     t.string   "are_all_gross_abnormalities_confirmed_microscopically"
     t.string   "are_all_appropriate_special_studies_done_and_reported"
-    t.string   "diagnoses_justified_on_anatomic_evidence_scroll_down_menu_sayin"
+    t.string   "diagnoses_justified_on_anatomic_evidence_scroll_down_menu_saying"
     t.string   "diagnoses_complete"
     t.string   "diagnosis_organized_and_sequenced_by_pathogenetic_significance"
     t.string   "transcriptional_or_typographical_errors"
@@ -1030,11 +991,11 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.string   "date"
     t.integer  "description_id"
     t.string   "are_all_appropriate_special_studies_done_and_reported_specify"
-    t.datetime "created_at",                                                      null: false
-    t.datetime "updated_at",                                                      null: false
+    t.datetime "created_at",                                                       null: false
+    t.datetime "updated_at",                                                       null: false
   end
 
-  add_index "question_answers", ["description_id"], name: "index_question_answers_on_description_id", using: :btree
+  add_index "question_answers", ["description_id"], name: "index_question_answers_on_description_id"
 
   create_table "special_reports", force: :cascade do |t|
     t.string   "title"
@@ -1049,7 +1010,7 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.datetime "updated_at",              null: false
   end
 
-  add_index "special_reports", ["description_id"], name: "index_special_reports_on_description_id", using: :btree
+  add_index "special_reports", ["description_id"], name: "index_special_reports_on_description_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -1060,8 +1021,8 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
+    t.integer  "current_sign_in_ip"
+    t.integer  "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.boolean  "admin"
@@ -1069,21 +1030,7 @@ ActiveRecord::Schema.define(version: 20170403161824) do
     t.boolean  "physician"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
-  add_foreign_key "ancillary_testings", "descriptions"
-  add_foreign_key "clinico_pathological_summaries", "descriptions"
-  add_foreign_key "consultants", "descriptions"
-  add_foreign_key "consultants", "users"
-  add_foreign_key "descriptions", "users"
-  add_foreign_key "externals", "descriptions"
-  add_foreign_key "final_diagnoses", "descriptions"
-  add_foreign_key "internals", "descriptions"
-  add_foreign_key "mother_data", "descriptions"
-  add_foreign_key "organ_weights", "patients"
-  add_foreign_key "placenta", "descriptions"
-  add_foreign_key "provisional_diagnoses", "descriptions"
-  add_foreign_key "question_answers", "descriptions"
-  add_foreign_key "special_reports", "descriptions"
 end

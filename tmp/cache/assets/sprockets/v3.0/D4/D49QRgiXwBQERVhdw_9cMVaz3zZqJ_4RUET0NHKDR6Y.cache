@@ -1,0 +1,7 @@
+I"b(function() {
+  $('body').on('click', function() {
+    alert('ghost');
+  });
+
+}).call(this);
+:ET
