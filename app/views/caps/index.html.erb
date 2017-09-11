@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Caps</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @caps.each do |cap| %>
+      <tr>
+        <td><%= link_to 'Show', cap %></td>
+        <td><%= link_to 'Edit', edit_cap_path(cap) %></td>
+        <td><%= link_to 'Destroy', cap, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Cap', new_cap_path %>
